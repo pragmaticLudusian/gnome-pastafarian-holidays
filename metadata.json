@@ -1,6 +1,6 @@
 {
   "name": "Pastafarian Holy Days",
-  "version-name": "1.0.2",
+  "version-name": "1.0.3",
   "description": "Display and remind you of upcoming Pastafarian holy days on your GNOME desktop",
   "uuid": "pastaleaves@salitha.info",
   "shell-version": ["46"],
