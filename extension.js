@@ -18,6 +18,7 @@
 
 import GObject from "gi://GObject";
 import St from "gi://St";
+import Clutter from "gi://Clutter";
 
 import {
   Extension,
@@ -31,7 +32,7 @@ import { getHoliday } from "./lib/utils.js";
 const Indicator = GObject.registerClass(
   class Indicator extends PanelMenu.Button {
     _init() {
-      super._init(0.0, _("Pastafarian Holidays"));
+      super._init(0.25, _("Pastafarian Holidays"));
 
       const today = getHoliday();
 
@@ -39,12 +40,13 @@ const Indicator = GObject.registerClass(
         new St.Label({
           text: today.title,
           style_class: "pasta-today-label",
+          y_expand: true,
+          y_align: Clutter.ActorAlign.CENTER,
         })
       );
 
       const dayInfo = new DayInfo();
       dayInfo.setData(today.title, today.description);
-      this.menu.addMenuItem(dayInfo);
       this.menu.addMenuItem(dayInfo);
     }
   }
@@ -53,7 +55,7 @@ const Indicator = GObject.registerClass(
 export default class PastafarianHolidayExtension extends Extension {
   enable() {
     this._indicator = new Indicator();
-    Main.panel.addToStatusArea(this.uuid, this._indicator);
+    Main.panel.addToStatusArea(this.uuid, this._indicator, -1, "left");
   }
 
   disable() {
