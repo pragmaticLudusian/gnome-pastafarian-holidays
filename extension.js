@@ -27,15 +27,17 @@ import {
 import * as PanelMenu from "resource:///org/gnome/shell/ui/panelMenu.js";
 import * as Main from "resource:///org/gnome/shell/ui/main.js";
 import { DayInfo } from "./lib/dayinfo.js";
-import { getHoliday, isMidnight } from "./lib/utils.js";
+import { getHoliday } from "./lib/utils.js";
+
+let updateDayFunc = null; // global interval
 
 const Indicator = GObject.registerClass(
   class Indicator extends PanelMenu.Button {
     _init() {
-      super._init(0.25, _("Pastafarian Holidays"));
+      super._init(1, _("Pastafarian Holidays")); // note: doesn't relocate upon auto-updating label
 
       let today = getHoliday();
-      setInterval(updateDay, 1000);
+      updateDayFunc = setInterval(updateDay, 1000);
 
       const label = new St.Label({
         text: today.title,
@@ -50,11 +52,9 @@ const Indicator = GObject.registerClass(
       this.menu.addMenuItem(dayInfo);
 
       function updateDay() {
-        if (isMidnight(new Date().getHours(), new Date().getMinutes())) {
-          today = getHoliday();
-          label.text = today.title;
-          dayInfo.setData(today.title, today.description);
-        }
+        today = getHoliday();
+        label.text = today.title;
+        dayInfo.setData(today.title, today.description);
       }
     }
   }
@@ -69,5 +69,6 @@ export default class PastafarianHolidayExtension extends Extension {
   disable() {
     this._indicator.destroy();
     this._indicator = null;
+    clearInterval(updateDayFunc); // prevent updating non-existent resource upon reloading
   }
 }
