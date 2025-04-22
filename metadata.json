@@ -1,8 +1,8 @@
 {
-  "name": "Pastafarian Holy Days",
-  "version-name": "1.0.3",
+  "name": "Pastafarian Holy Days (dev)",
+  "version-name": "1.0.4",
   "description": "Display and remind you of upcoming Pastafarian holy days on your GNOME desktop",
-  "uuid": "pastaleaves@salitha.info",
+  "uuid": "pastaleaves@pragmaticludusian.github.com",
   "shell-version": ["46"],
-  "url": "https://github.com/salitha-pathi/gnome-pastafarian-holidays"
+  "url": "https://github.com/pragmaticludusian/gnome-pastafarian-holidays"
 }
